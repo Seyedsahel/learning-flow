@@ -45,8 +45,8 @@ function playGame(playerMove){
      <p class="text-white m-3.5 text-2xl inline-block">
       you
     </p>
-    <img class="inline-block h-10 w-10 mt-3.5 mr-1" src="images/${playerMove}-emoji.png" alt="">
-    <img class="inline-block h-10 w-10 mt-3.5 ml-1" src="images/${computerMove}-emoji.png" alt="">
+    <img class="inline-block h-10 w-10 mr-1" src="images/${playerMove}-emoji.png" alt="">
+    <img class="inline-block h-10 w-10 ml-1" src="images/${computerMove}-emoji.png" alt="">
     <p class="text-white m-3.5 text-2xl inline-block">
       computer
     </p>
