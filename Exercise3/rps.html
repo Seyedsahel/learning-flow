@@ -8,20 +8,20 @@
       Rock Paper Scissors
     </p>
     <div class="flex justify-center gap-4">
-       <button onclick="paper()" class="w-24 h-24 rounded-full border-amber-50 border-2">
-        <img class="w-20" src="images/paper-emoji.png" alt="">
+       <button onclick="playGame('paper')" class="flex justify-center w-24 h-24 rounded-full border-amber-50 border-2 cursor-pointer">
+        <img class="w-20 h-20 pt-3" src="images/paper-emoji.png" alt="">
         </button>
-        <button onclick="rock()" class="w-24 h-24 rounded-full border-amber-50 border-2">
-            <img class="w-20" src="images/rock-emoji.png" alt="">
+        <button onclick="playGame('rock')" class="flex justify-center w-24 h-24 rounded-full border-amber-50 border-2 cursor-pointer">
+            <img class="w-20 h-20" src="images/rock-emoji.png" alt="">
         </button>
-        <button onclick="scissors()" class="w-24 h-24 rounded-full border-amber-50 border-2">
-            <img class="w-20" src="images/scissors-emoji.png" alt="">
+        <button onclick="playGame('scissors')" class="flex justify-center w-24 h-24 rounded-full border-amber-50 border-2 cursor-pointer">
+            <img class="w-20 h-20 pt-3" src="images/scissors-emoji.png" alt="">
         </button>
     </div>
-    <p class="text-white text-center mt-10 mb-5 text-3xl font-bold">
+    <p class="js-res text-white text-center mt-10 mb-5 text-3xl font-bold">
       Tie.
     </p>
-    <div class="flex justify-center">
+    <div class="js-showMoves flex justify-center">
       <p class="text-white m-3.5 text-2xl inline-block">
       you
     </p>
@@ -31,11 +31,11 @@
       computer
     </p>
     </div>
-    <p class="text-white m-3.5 text-xl text-center">
+    <p class="js-score text-white m-3.5 text-xl text-center">
       Wins: 1, Losses: 1, Ties:2
     </p>
     <div class="flex justify-center">
-      <button class="bg-amber-50 m-3.5 px-3 py-2 rounded-xl">
+      <button onclick="resetScore()" class="bg-amber-50 m-3.5 px-3 py-2 rounded-xl cursor-pointer">
         Reset Score
       </button>
     </div>
