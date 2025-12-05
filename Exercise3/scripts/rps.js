@@ -1,3 +1,16 @@
+document.body.addEventListener('keydown',(event)=>{
+    let playerMove;
+    if(event.key==='r'){
+        playerMove='rock';
+    }else if(event.key==='p'){
+        playerMove = 'paper';
+    } else if(event.key==='s'){
+        playerMove = 'scissors';
+    }else{
+        return;
+    }
+    playGame(playerMove);
+});
 let score = JSON.parse(localStorage.getItem('score')) || {
   wins: 0,
   losses: 0,
@@ -63,9 +76,6 @@ function playGame(playerMove){
 
     updateScoreElement();
 
-    console.log(computerMove);
-    console.log(playerMove);
-    console.log(res);
     }
       
 
