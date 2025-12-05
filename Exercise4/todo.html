@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  </head>
+  <body class="bg-gray-950 mt-10 flex justify-center items-center flex-col">
+
+  <div class="w-2/3 bg-amber-50 flex justify-center items-center flex-col rounded-sm">
+    <div class="text-black font-sans font-bold text-4xl m-5">
+      todo List
+    </div>
+    <div class="flex items-center w-2/3 rounded-full overflow-hidden bg-gray-200 mb-4">
+      <input 
+        type="text"
+        placeholder="Add your task"
+        class="js-text flex-1 px-4 py-3 bg-gray-200 text-gray-700 focus:outline-none"
+      />
+      <button 
+        class="js-addTodo px-6 py-3 bg-orange-500 text-white font-medium hover:bg-orange-600 transition"
+      >
+        Add
+      </button>
+    </div>
+
+    <div class="js-todoItem flex flex-col m-5 w-2/3"></div>
+
+ 
+</div>
+    <script src="todo.js"></script>
+  </body>
+</html>
