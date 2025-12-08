@@ -1,5 +1,5 @@
-
-let todos = [];
+let todos = JSON.parse(localStorage.getItem('todos')) ||  [];
+showTodo(todos);
 document.querySelector('.js-addTodo').addEventListener('click',()=>{
    let todoElm = document.querySelector('.js-text');
    let todo = todoElm.value;
@@ -8,6 +8,7 @@ document.querySelector('.js-addTodo').addEventListener('click',()=>{
         name: todo,
         done: false,
     });
+    localStorage.setItem('todos', JSON.stringify(todos));
     showTodo(todos);
     todoElm.value = '';
    }
@@ -23,6 +24,7 @@ document.body.addEventListener('keydown',(event)=>{
         name: todo,
         done: false,
     });
+    localStorage.setItem('todos', JSON.stringify(todos));
     showTodo(todos);
     todoElm.value = '';
    }
@@ -56,10 +58,12 @@ function showTodo(todos){
 function markAsDone(id){
     if(!todos[id].done){
         todos[id].done = true;
+        localStorage.setItem('todos', JSON.stringify(todos));
         showTodo(todos);
         console.log(value.done,'if');
     }else{
         todos[id].done = false;
+        localStorage.setItem('todos', JSON.stringify(todos));
         showTodo(todos);    
         console.log(value.done,'else');
 
@@ -68,5 +72,6 @@ function markAsDone(id){
 
 function deleteTodo(id){  
     todos.splice(id,1);
+    localStorage.setItem('todos', JSON.stringify(todos));
     showTodo(todos);
 }
