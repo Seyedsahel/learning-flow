@@ -15,3 +15,7 @@ export interface RegisterResponse {
   username: string
   password: string
 }
+
+export interface ErrorResponse {
+  message: string
+}
