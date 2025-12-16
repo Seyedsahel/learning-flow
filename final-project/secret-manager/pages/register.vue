@@ -1,53 +1,36 @@
 <script setup lang="ts">
-    
-  import { ref } from 'vue';
+import { ref } from 'vue'
+import { useRegisterValidation } from '@/composables/useRegisterValidation'
+import type TextInputVue from '~/components/TextInput.vue'
 
-  definePageMeta({
-    middleware: 'auth'
-  })
+definePageMeta({
+  middleware: 'auth'
+})
 
-  const username = ref('');
-  const password = ref('');
-  const confirmPassword = ref('');
-  const showPassword = ref(false);
-  const showConfirmPassword = ref(false);
-  const errors = ref<{ [key: string]: string }>({});
+const username = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
+const errors = ref<Record<string, string>>({})
 
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
+const { validateForm } = useRegisterValidation(
+  username,
+  password,
+  confirmPassword,
+  errors
+)
 
-    if (!username.value) {
-      newErrors.username = 'Username is required';
-    } else if (username.value.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters';
-    }
-
-    if (!password.value) {
-      newErrors.password = 'Password is required';
-    } else if (password.value.length < 4) {
-      newErrors.password = 'Password must be at least 4 characters';
-    }
-
-    if (!confirmPassword.value) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (password.value !== confirmPassword.value) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    errors.value = newErrors;
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = () => {
-    if (validateForm()) {
-      console.log('Registration successful', { 
-        username: username.value, 
-        password: password.value 
-      });
-      // Handle successful registration
-    }
-  };
+const handleSubmit = () => {
+  if (validateForm()) {
+    console.log('Registration successful', {
+      username: username.value,
+      password: password.value
+    })
+  }
+}
 </script>
+
 
 
 <template>
@@ -62,93 +45,35 @@
       </div>
 
       <form @submit.prevent="handleSubmit" class="space-y-5">
-        <!-- Username Input -->
-        <div>
-          <label for="username" class="block text-slate-200 mb-2">
-            Username
-          </label>
-          <div class="relative">
-            <input
-              id="username"
-              type="text"
-              v-model="username"
-              :class="[
-                'w-full bg-slate-900 border rounded-lg px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent',
-                errors.username ? 'border-red-500' : 'border-slate-700'
-              ]"
-              placeholder="Enter your username"
-            />
-            <span v-if="username && !errors.username" class="pi pi-check-circle absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 text-2xl"></span>
-          </div>
-          <p v-if="errors.username" class="text-red-400 text-sm mt-1">
-            {{ errors.username }}
-          </p>
-        </div>
-
-        <!-- Password Input -->
-        <div>
-          <label for="password" class="block text-slate-200 mb-2">
-            Password
-          </label>
-          <div class="relative">
-            <input
-              id="password"
-              :type="showPassword ? 'text' : 'password'"
-              v-model="password"
-              :class="[
-                'w-full bg-slate-900 border rounded-lg px-4 py-3 pr-12 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent',
-                errors.password ? 'border-red-500' : 'border-slate-700'
-              ]"
-              placeholder="Enter your password"
-            />
-            <button
-              type="button"
-              @click="showPassword = !showPassword"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
-            >
-              <span v-if="showPassword" class="pi pi-eye text-lg" ></span>
-              <span v-else class="pi pi-eye-slash text-lg" ></span>
-            </button>
-          </div>
-          <p v-if="errors.password" class="text-red-400 text-sm mt-1">
-            {{ errors.password }}
-          </p>
-        </div>
-
-        <!-- Confirm Password Input -->
-        <div>
-          <label for="confirmPassword" class="block text-slate-200 mb-2">
-            Confirm Password
-          </label>
-          <div class="relative">
-            <input
-              id="confirmPassword"
-              :type="showConfirmPassword ? 'text' : 'password'"
-              v-model="confirmPassword"
-              :class="[
-                'w-full bg-slate-900 border rounded-lg px-4 py-3 pr-12 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent',
-                errors.confirmPassword ? 'border-red-500' : 'border-slate-700'
-              ]"
-              placeholder="Confirm your password"
-            />
-            <button
-              type="button"
-              @click="showConfirmPassword = !showConfirmPassword"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
-            >
-              <span v-if="showConfirmPassword" class="pi pi-eye text-lg" ></span>
-              <span v-else class="pi pi-eye-slash text-lg" ></span>
-            </button>
-          </div>
-          <p v-if="errors.confirmPassword" class="text-red-400 text-sm mt-1">
-            {{ errors.confirmPassword }}
-          </p>
-          <p v-if="confirmPassword && password === confirmPassword && !errors.confirmPassword" class="text-emerald-400 text-sm mt-1.5 flex items-center gap-1">
-            <span class="pi pi-check-circle text-emerald-500 text"></span>
+        <TextInput
+          id="username"
+          label="Username"
+          v-model="username"
+          :error="errors.username"
+          placeholder="Enter your username"
+        />
+         <PasswordInput
+          id="password"
+          label="Password"
+          v-model="password"
+          :error="errors.password"
+          placeholder="Enter your password"
+        />
+           <PasswordInput
+          id="confirmPassword"
+          label="Confirm Password"
+          v-model="confirmPassword"
+          :error="errors.confirmPassword"
+          placeholder="Confirm your password"
+        >
+          <p
+            v-if="confirmPassword && password === confirmPassword && !errors.confirmPassword"
+            class="text-emerald-400 text-sm mt-1.5 flex items-center gap-1"
+          >
+            <span class="pi pi-check-circle text-emerald-500"></span>
             Passwords match
           </p>
-        </div>
-
+        </PasswordInput>
         <!-- Submit Button -->
         <button
           type="submit"
